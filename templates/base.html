@@ -26,16 +26,20 @@
           {% if user.is_authenticated %}
             <div class="mb-3">
               <strong>Welcome,</strong><br>
-              <a href="{% url 'taxi:driver-detail' user.driver.pk %}">
+              {% if user.driver %}
+                <a href="{% url 'taxi:driver-detail' user.driver.pk %}">
+                  {{ user.username }}
+                </a>
+              {% else %}
                 {{ user.username }}
-              </a>
+              {% endif %}
             </div>
-            <form method="post" action="{% url 'logout' %}">
+            <form method="post" action="{% url 'taxi:logout' %}">
               {% csrf_token %}
               <button type="submit" class="btn btn-danger btn-sm w-100">Logout</button>
             </form>
           {% else %}
-            <a href="{% url 'login' %}" class="btn btn-primary btn-sm w-100">Login</a>
+            <a href="{% url 'taxi:login' %}" class="btn btn-primary btn-sm w-100">Login</a>
           {% endif %}
           <hr>
           <ul class="nav flex-column">
